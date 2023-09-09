@@ -42,7 +42,7 @@ public class Formulario {
         System.out.println("--= CADASTRO DE PESSOAS =--");
 
         System.out.print("Nome: ");
-        String nome = sc.nextLine();
+        String nome = sc.nextLine().toUpperCase();
 
         System.out.print("Idade: ");
         int idade = sc.nextInt();
@@ -52,10 +52,21 @@ public class Formulario {
 
         System.out.print("CPF: ");
         String cpf = sc.next();
+        // Remove todos os caracteres não numéricos do CPF
+        cpf = cpf.replaceAll("[^0-9]", "");
+
+        // Verifica se o CPF tem 11 dígitos
+        if (cpf.length() != 11) {
+            throw new IllegalArgumentException("CPF inválido, deve conter 11 dígitos.");
+        }
+
+        // Aplica a máscara
+        String cpfDeMascara=cpf.substring(0, 3) + "." + cpf.substring(3, 6) + "." + cpf.substring(6, 9) + "-" + cpf.substring(9);
+
 
         System.out.println("==".repeat(10));
 
-        Formulario novoCadastro = new Formulario(nome, idade, email, cpf);
+        Formulario novoCadastro = new Formulario(nome, idade, email, cpfDeMascara);
         System.out.printf("Cadastro de %s realizado com sucesso!!!%n", nome);
         System.out.println("--".repeat(15));
 
